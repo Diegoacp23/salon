@@ -2,280 +2,335 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Salón de Belleza Glamour | Tu Estilo, Nuestra Pasión</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <style>
-        /* --- ESTILOS PERSONALIZADOS --- */
+
+<style>
+        /* --- ESTILOS PERSONALIZADOS CHIC --- */
         :root {
-            --primary-color: #d4af37; /* Dorado elegante */
-            --dark-bg: #1a1a1a;
-            --light-bg: #f8f9fa;
+            --primary-gold: #c6a34f; /* Un dorado más sofisticado */
+            --dark-bg: #222222;
+            --light-soft: #f9f6f2; /* Un blanco roto más elegante */
         }
 
         body {
             font-family: 'Lato', sans-serif;
-            color: #333;
+            color: #4a4a4a;
+            overflow-x: hidden; /* Evita scroll horizontal en móviles */
         }
 
-        h1, h2, h3, .navbar-brand {
+        h1, h2, h3, h4, .navbar-brand, .modal-title {
             font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
 
-        /* Navbar Transparente */
+        /* Navbar */
         .navbar {
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.98) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
         }
         
         .navbar-brand {
+            font-size: 1.4rem;
+            color: var(--dark-bg) !important;
+        }
+
+        .nav-link {
             font-weight: 700;
-            color: var(--dark-bg);
-            font-size: 1.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: #555 !important;
+            padding: 0.5rem 1rem !important;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-gold) !important;
         }
 
-        .text-gold {
-            color: var(--primary-color);
-        }
-
+        /* Botones Dorados */
         .btn-gold {
-            background-color: var(--primary-color);
+            background-color: var(--primary-gold);
             color: white;
             border: none;
-            padding: 10px 30px;
+            padding: 12px 35px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 0; /* Bordes cuadrados más elegantes */
+            transition: all 0.4s ease;
         }
 
         .btn-gold:hover {
-            background-color: #b5952f;
-            color: white;
-            transform: translateY(-2px);
+            background-color: var(--dark-bg);
+            color: var(--primary-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.5);
         }
 
-        /* Hero Section */
+        /* Hero Section (Portada) Responsive */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+             /* Imagen de fondo de alta calidad */
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1600948836101-f9ffda59d250?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
-            height: 80vh;
+            /* Altura mínima para móviles, altura fija para desktop */
+            min-height: 75vh; 
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
             color: white;
+        }
+        
+        /* Ajuste de texto en móvil para la portada */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero .lead { font-size: 1.1rem; }
         }
 
         /* Tarjetas de Servicios */
         .service-card {
             border: none;
-            transition: transform 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 0;
+            background: white;
+            padding: 3rem 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .service-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(198, 163, 79, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-gold);
+            margin-bottom: 1.5rem;
         }
 
-        /* Galería */
+        /* Galería & Precios */
         .gallery-img {
-            height: 300px;
+            height: 350px;
             object-fit: cover;
-            width: 100%;
-            border-radius: 5px;
-            transition: transform 0.3s;
+            transition: transform 0.5s ease, filter 0.5s ease;
         }
         
         .gallery-img:hover {
-            transform: scale(1.02);
-            filter: brightness(0.8);
-            cursor: pointer;
+            transform: scale(1.03);
+            filter: brightness(1.1);
         }
 
-        /* Tabla de Precios */
-        .price-list .list-group-item {
-            border: none;
-            border-bottom: 1px dashed #ccc;
+        .price-list-item {
+            border-bottom: 1px dotted #d1d1d1;
+            padding: 1.2rem 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
-            background: transparent;
+            font-weight: 400;
         }
 
-        .price {
-            font-weight: bold;
-            color: var(--primary-color);
-            font-size: 1.2rem;
+        .price-tag {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary-gold);
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--dark-bg);
-            color: white;
-            padding: 40px 0;
+        /* Estilos del MODAL DE PROMOCIÓN */
+        .modal-content {
+            border-radius: 0; /* Bordes rectos */
+            border: none;
         }
+        .modal-header .btn-close {
+            /* Hacer el botón de cerrar más visible sobre la imagen si fuera necesario */
+            z-index: 10;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background-color: rgba(255,255,255,0.8);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+        .promo-img {
+            max-height: 70vh; /* Que no sea más alta que el 70% de la pantalla */
+            object-fit: cover;
+        }
+
+        /* Footer Styles */
+        footer { background: var(--dark-bg); color: #aaa; }
+        footer h5 { color: var(--primary-gold); }
     </style>
 </head>
-<body>
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="70">
 
+    <div class="modal fade" id="promoModal" tabindex="-1" aria-labelledby="promoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg"> <div class="modal-content overflow-hidden">
+                <div class="modal-header border-0 p-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0 position-relative text-center">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c2FsJUMzJUIzbiUyMGRlJTIwYmVsbGV6YXxlbnwwfHwwfHx8MA%3D%3D" class="img-fluid w-100 promo-img" alt="Oferta Especial de Temporada">
+                    
+                    </div>
+            </div>
+        </div>
+    </div>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="bi bi-scissors text-gold"></i> ESTILO & GLAMOUR | Marilyn Carvajal</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-scissors" style="color: var(--primary-gold);"></i> GLAMOUR SALÓN
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#galeria">Tendencias</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#precios">Precios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contacto">Agendar</a></li>
+                <ul class="navbar-nav align-items-center text-center">
+                    <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#galeria">Looks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#precios">Menú</a></li>
+                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                        <a class="btn btn-gold" href="#contacto">Agendar Cita</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <section id="inicio" class="hero">
-        <div class="container">
-            <h1 class="display-3 fw-bold mb-4">Realza tu Belleza Natural</h1>
-            <p class="lead mb-4">Expertos en colorimetría, cortes modernos y cuidado capilar.</p>
-            <a href="#contacto" class="btn btn-gold btn-lg">Reserva tu Cita</a>
+        <div class="container text-center text-md-start px-4">
+            <div class="row justify-content-center justify-content-md-start">
+                <div class="col-lg-7">
+                    <h3 class="text-uppercase letter-spacing-2 mb-3" style="color: var(--primary-gold); letter-spacing: 3px;">Bienvenida a tu nuevo look</h3>
+                    <h1 class="display-3 mb-4">Donde la belleza se encuentra con el arte.</h1>
+                    <p class="lead mb-5 opacity-75">Especialistas en balayage, cortes de tendencia y tratamientos de recuperación capilar premium.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-md-start">
+                        <a href="#contacto" class="btn btn-gold">Reservar Ahora</a>
+                        <a href="#galeria" class="btn btn-outline-light rounded-0 px-4 py-3 text-uppercase fw-bold" style="letter-spacing: 2px;">Ver Trabajos</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="py-5 bg-light">
-        <div class="container">
+    <section id="servicios" class="py-5" style="background-color: var(--light-soft);">
+        <div class="container py-lg-5">
             <div class="row text-center mb-5">
-                <div class="col-lg-8 mx-auto">
-                    <h2 class="fw-bold">Nuestros Servicios</h2>
-                    <p class="text-muted">Experiencias diseñadas para que te sientas única.</p>
+                <div class="col-lg-6 mx-auto">
+                    <h2 class="display-5">Experiencias Premium</h2>
+                    <p class="text-muted mt-3">Utilizamos exclusivamente productos de alta gama para garantizar la salud de tu cabello.</p>
                 </div>
             </div>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="card service-card h-100 p-4 text-center">
-                        <div class="fs-1 text-gold mb-3"><i class="bi bi-magic"></i></div>
-                        <h4>Corte y Styling</h4>
-                        <p class="text-muted">Desde cortes clásicos hasta las últimas tendencias europeas.</p>
+                    <div class="service-card h-100 text-center">
+                        <i class="bi bi-brush service-icon"></i>
+                        <h4>Coloración Experta</h4>
+                        <p class="text-muted">Dominamos las técnicas de Balayage, Babylights y corrección de color sin dañar tu fibra capilar.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card service-card h-100 p-4 text-center">
-                        <div class="fs-1 text-gold mb-3"><i class="bi bi-palette"></i></div>
-                        <h4>Coloración</h4>
-                        <p class="text-muted">Balayage, Babylights y tintes orgánicos sin amoníaco.</p>
+                    <div class="service-card h-100 text-center">
+                        <i class="bi bi-scissors service-icon"></i>
+                        <h4>Corte y Diseño</h4>
+                        <p class="text-muted">Cortes personalizados según la forma de tu rostro y estilo de vida. Asesoramiento completo.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card service-card h-100 p-4 text-center">
-                        <div class="fs-1 text-gold mb-3"><i class="bi bi-gem"></i></div>
-                        <h4>Tratamientos</h4>
-                        <p class="text-muted">Hidratación profunda, Keratina y botox capilar.</p>
+                    <div class="service-card h-100 text-center">
+                        <i class="bi bi-stars service-icon"></i>
+                        <h4>Tratamientos Spa</h4>
+                        <p class="text-muted">Botox capilar, Keratina orgánica e hidrataciones profundas para un brillo espejo.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="galeria" class="py-5">
-        <div class="container">
-            <h2 class="text-center fw-bold mb-5">Nuestros Resultados</h2>
-            <div class="row g-3">
-                <div class="col-md-4 col-6">
-                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" class="gallery-img" alt="Corte mujer">
+    <section id="galeria" class="py-0">
+        <div class="container-fluid p-0">
+            <div class="row g-0">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=600&q=80" class="w-100 gallery-img" alt="Rubio Balayage">
                 </div>
-                <div class="col-md-4 col-6">
-                    <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=600&q=80" class="gallery-img" alt="Productos">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" class="w-100 gallery-img" alt="Corte Bob">
                 </div>
-                <div class="col-md-4 col-12">
-                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=600&q=80" class="gallery-img" alt="Maquillaje">
+                <div class="col-6 col-md-4 col-lg-3">
+                    <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&q=80" class="w-100 gallery-img" alt="Tratamiento Capilar">
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 d-md-none d-lg-block"> <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" class="w-100 gallery-img" alt="Peinado Elegante">
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="precios" class="py-5 bg-light">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-4">
-                    <img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded shadow" alt="Salon interior">
-                </div>
+    <section id="precios" class="py-5">
+        <div class="container py-lg-5">
+            <div class="row align-items-center g-5">
+                
                 <div class="col-lg-6">
-                    <h2 class="fw-bold mb-4">Menú de Precios</h2>
-                    <ul class="list-group price-list list-unstyled">
-                        <li class="list-group-item">
-                            <span>Corte de Dama + Secado</span>
-                            <span class="price">$25</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Corte de Caballero</span>
-                            <span class="price">$15</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Balayage / Mechas (desde)</span>
-                            <span class="price">$80</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Manicure Spa</span>
-                            <span class="price">$20</span>
-                        </li>
-                        <li class="list-group-item">
-                            <span>Kit Shampoo + Acondicionador Premium</span>
-                            <span class="price">$45</span>
-                        </li>
-                    </ul>
-                    <div class="mt-4">
-                        <small class="text-muted">* Precios sujetos a evaluación del cabello.</small>
+                    <h2 class="display-6 mb-4">Menú de Servicios</h2>
+                    <div class="pe-lg-4">
+                        <div class="price-list-item">
+                            <span>Corte Dama + Lavado Spa + Secado</span>
+                            <span class="price-tag">$35</span>
+                        </div>
+                        <div class="price-list-item">
+                            <span>Balayage / Mechas (Desde)</span>
+                            <span class="price-tag">$120</span>
+                        </div>
+                        <div class="price-list-item">
+                            <span>Retoque de Raíz</span>
+                            <span class="price-tag">$50</span>
+                        </div>
+                        <div class="price-list-item">
+                            <span>Tratamiento Hidratación Profunda</span>
+                            <span class="price-tag">$45</span>
+                        </div>
+                        <div class="price-list-item border-0">
+                            <span>Peinado / Styling Evento</span>
+                            <span class="price-tag">$40</span>
+                        </div>
+                        <p class="text-muted small mt-3 fst-italic">* Precios referenciales, sujetos a diagnóstico presencial del cabello.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="contacto" class="py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <div class="card shadow-lg border-0">
-                        <div class="card-body p-5">
-                            <h2 class="fw-bold mb-4">¡Agenda tu Cita!</h2>
-                            <p class="mb-4">Déjanos tus datos o escríbenos directamente a WhatsApp.</p>
-                            
-                            <form id="bookingForm" onsubmit="enviarFormulario(event)">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control form-control-lg" placeholder="Tu Nombre" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="tel" class="form-control form-control-lg" placeholder="Teléfono" required>
-                                    </div>
-                                    <div class="col-12">
-                                        <select class="form-select form-select-lg">
-                                            <option selected>¿Qué servicio deseas?</option>
-                                            <option value="1">Corte de Cabello</option>
-                                            <option value="2">Coloración</option>
-                                            <option value="3">Consulta de Productos</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 mt-4">
-                                        <button type="submit" class="btn btn-gold btn-lg w-100">Solicitar Disponibilidad</button>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div class="mt-4 pt-3 border-top">
-                                <p class="fw-bold">O contáctanos directamente:</p>
-                                <a href="#" class="btn btn-outline-success"><i class="bi bi-whatsapp"></i> WhatsApp</a>
-                                <a href="#" class="btn btn-outline-primary ms-2"><i class="bi bi-instagram"></i> Instagram</a>
+                <div id="contacto" class="col-lg-6">
+                    <div class="card border-0 shadow-lg p-4 p-md-5" style="background: var(--light-soft);">
+                        <h3 class="mb-4">Agenda tu cita hoy</h3>
+                        <form onsubmit="event.preventDefault(); alert('¡Mensaje enviado! Te contactaremos por WhatsApp.');">
+                            <div class="mb-3">
+                                <input type="text" class="form-control form-control-lg rounded-0 border-0 py-3 shadow-sm" placeholder="Tu nombre completo" required>
                             </div>
+                            <div class="mb-3">
+                                <input type="tel" class="form-control form-control-lg rounded-0 border-0 py-3 shadow-sm" placeholder="Teléfono / WhatsApp" required>
+                            </div>
+                            <div class="mb-4">
+                                <select class="form-select form-select-lg rounded-0 border-0 py-3 shadow-sm" required>
+                                    <option value="" selected disabled>Selecciona el servicio de interés</option>
+                                    <option>Corte y Secado</option>
+                                    <option>Coloración / Mechas</option>
+                                    <option>Tratamiento Capilar</option>
+                                    <option>Solo consulta de precios</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-gold w-100 py-3 fs-5">SOLICITAR DISPONIBILIDAD</button>
+                        </form>
+                        <div class="text-center mt-4">
+                            <p class="mb-2">¿Prefieres escribirnos directo?</p>
+                            <a href="https://wa.me/5804241434735" class="text-decoration-none fs-5 me-3" style="color: #25D366;"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+                            <a href="#" class="text-decoration-none fs-5" style="color: #E1306C;"><i class="bi bi-instagram"></i> Instagram</a>
                         </div>
                     </div>
                 </div>
@@ -283,41 +338,64 @@
         </div>
     </section>
 
-    <footer class="text-center">
+    <footer class="py-5 text-center text-md-start">
         <div class="container">
-            <p class="mb-0">© 2024 Salón de Belleza Glamour. Todos los derechos reservados.</p>
-            <small>Diseñado con cariño para la mejor tía del mundo.</small>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="mb-3 font-playfair">GLAMOUR SALÓN</h5>
+                    <p class="small">Tu destino favorito para el cuidado del cabello y la belleza integral. Utilizamos solo lo mejor para ti.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Horarios</h5>
+                    <ul class="list-unstyled small">
+                        <li>Lunes a Viernes: 9:00 AM - 7:00 PM</li>
+                        <li>Sábados: 9:00 AM - 8:00 PM</li>
+                        <li>Domingos: Cerrado</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Ubicación</h5>
+                    <p class="small"><i class="bi bi-geo-alt-fill me-2" style="color: var(--primary-gold)"></i> Av. Principal de la Moda, Local 123. Ciudad.</p>
+                </div>
+            </div>
+            <div class="row mt-5 pt-4 border-top border-secondary opacity-50 text-center">
+                <div class="col-12">
+                    <small>© 2024 Glamour Salón. Todos los derechos reservados.</small>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        function enviarFormulario(e) {
-            e.preventDefault();
-            // Simulación de envío
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerText;
+        // Esperar a que todo el contenido de la página se cargue
+        document.addEventListener('DOMContentLoaded', function() {
             
-            btn.innerText = 'Enviando...';
-            btn.disabled = true;
+            // 1. Seleccionar el elemento del modal por su ID
+            var promoModalElement = document.getElementById('promoModal');
+            
+            // 2. Crear una instancia de Bootstrap Modal
+            // 'keyboard: false' evita que se cierre si presionan la tecla ESC (opcional)
+            var myModal = new bootstrap.Modal(promoModalElement, {
+                keyboard: true, 
+                backdrop: 'static', // Hace que tengan que dar clic en cerrar obligatoriamente, no afuera
+                focus: true
+            });
+            
+            // 3. Mostrar el modal automáticamente
+            // Usamos un pequeño retraso de 1 segundo (1000ms) para que sea más elegante
+            setTimeout(function() {
+                 myModal.show();
+            }, 1000);
 
-            setTimeout(() => {
-                alert('¡Gracias! Tu solicitud ha sido recibida. Te contactaremos pronto para confirmar.');
-                btn.innerText = '¡Enviado!';
-                btn.classList.replace('btn-gold', 'btn-success');
-                e.target.reset();
-            }, 1500);
-        }
-
-        // Efecto suave al hacer scroll en el navbar
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-sm');
-            } else {
-                navbar.classList.remove('shadow-sm');
-            }
+            // Script extra: Cerrar el menú del navbar en móvil al hacer clic en un enlace
+            const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+            const menuToggle = document.getElementById('navbarNav');
+            const bsCollapse = new bootstrap.Collapse(menuToggle, {toggle: false});
+            navLinks.forEach( l => {
+                l.addEventListener('click', () => { bsCollapse.hide() });
+            });
         });
     </script>
 </body>
