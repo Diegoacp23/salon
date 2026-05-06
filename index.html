@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketplace | Detalles del Producto</title>
+    <title>Marketplace | Detalles del Producto Responsive</title>
     <style>
         /* ================= Reset y Variables ================= */
         * {
@@ -36,6 +36,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap; /* Permite que los elementos bajen en móviles */
+            gap: 15px;
         }
 
         .logo {
@@ -43,21 +45,23 @@
             font-weight: bold;
             color: white;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .search-bar {
             flex-grow: 1;
-            margin: 0 20px;
             display: flex;
-            max-width: 600px;
+            max-width: 800px;
+            margin: 0 20px;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 10px;
+            padding: 10px 15px;
             border: none;
             border-radius: 4px 0 0 4px;
             outline: none;
+            font-size: 16px;
         }
 
         .search-bar button {
@@ -67,6 +71,14 @@
             border-radius: 0 4px 4px 0;
             cursor: pointer;
             font-weight: bold;
+            font-size: 16px;
+        }
+
+        .cart-icon {
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            padding: 5px;
         }
 
         /* ================= Layout Principal ================= */
@@ -78,26 +90,9 @@
 
         .product-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr 300px;
+            grid-template-columns: minmax(300px, 1fr) minmax(300px, 1.2fr) 300px;
             gap: 30px;
-        }
-
-        @media (max-width: 1024px) {
-            .product-layout {
-                grid-template-columns: 1fr 1fr;
-            }
-            .buy-box {
-                grid-column: span 2;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .product-layout {
-                grid-template-columns: 1fr;
-            }
-            .buy-box {
-                grid-column: span 1;
-            }
+            align-items: start;
         }
 
         /* ================= Visor 360 (Izquierda) ================= */
@@ -105,22 +100,23 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
 
         .viewer-container {
             width: 100%;
-            max-width: 500px;
             position: relative;
             background: #f8f8f8;
             border-radius: 8px;
             padding: 20px;
             cursor: grab;
-            perspective: 1000px; /* Necesario para el efecto 3D */
+            perspective: 1000px;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 400px;
+            aspect-ratio: 1 / 1; /* Mantiene el visor cuadrado en cualquier pantalla */
+            max-height: 500px;
         }
 
         .viewer-container:active {
@@ -133,7 +129,7 @@
             height: auto;
             user-select: none;
             -webkit-user-drag: none;
-            transition: transform 0.1s ease-out; /* Suaviza el giro */
+            transition: transform 0.1s ease-out;
             filter: drop-shadow(0px 15px 15px rgba(0,0,0,0.3));
         }
 
@@ -151,6 +147,10 @@
         }
 
         /* ================= Detalles del Producto (Centro) ================= */
+        .details-section {
+            width: 100%;
+        }
+
         .details-section h1 {
             font-size: 24px;
             font-weight: 400;
@@ -162,10 +162,6 @@
             color: #007185;
             text-decoration: none;
             font-size: 14px;
-        }
-
-        .store-link:hover {
-            text-decoration: underline;
         }
 
         .divider {
@@ -184,30 +180,22 @@
             color: #b12704;
         }
 
-        .attributes h3 {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
-
         .size-selector {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-top: 10px;
         }
 
         .size-btn {
-            padding: 8px 15px;
+            padding: 10px 15px;
             border: 1px solid var(--border-color);
             background: white;
             cursor: pointer;
             border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .size-btn:hover {
-            background: #f7fafa;
+            font-size: 15px;
+            min-width: 44px; /* Tamaño mínimo recomendado para móviles */
+            text-align: center;
         }
 
         .size-btn.active {
@@ -222,9 +210,9 @@
         }
 
         .about-item li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-size: 14px;
-            color: var(--text-main);
+            line-height: 1.4;
         }
 
         /* ================= Caja de Compra (Derecha) ================= */
@@ -232,7 +220,8 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
-            height: fit-content;
+            width: 100%;
+            background: white;
         }
 
         .buy-box .price {
@@ -248,31 +237,76 @@
 
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 14px; /* Botones más altos para móviles */
             border: none;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
             margin-bottom: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .btn-cart {
-            background-color: var(--primary-color);
+        .btn-cart { background-color: var(--primary-color); }
+        .btn-buy { background-color: var(--button-buy); }
+
+        /* ================= MEDIA QUERIES (Responsive Full) ================= */
+        
+        /* Tablets y Laptops pequeñas */
+        @media (max-width: 1024px) {
+            .product-layout {
+                grid-template-columns: 1fr 1fr; /* Pasa a 2 columnas */
+            }
+            .buy-box {
+                grid-column: span 2; /* La caja de compra se pone abajo abarcando todo */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .buy-box .btn {
+                max-width: 400px; /* Evita que los botones sean excesivamente anchos */
+            }
         }
 
-        .btn-cart:hover {
-            background-color: var(--primary-hover);
-        }
+        /* Dispositivos Móviles (Teléfonos) */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 15px;
+            }
+            .search-bar {
+                order: 3; /* Envía la barra de búsqueda debajo del logo y el carrito */
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .container {
+                padding: 10px;
+            }
 
-        .btn-buy {
-            background-color: var(--button-buy);
-        }
+            .product-layout {
+                grid-template-columns: 1fr; /* Todo en 1 sola columna */
+                gap: 20px;
+            }
 
-        .btn-buy:hover {
-            background-color: var(--button-buy-hover);
-        }
+            .buy-box {
+                grid-column: span 1;
+            }
 
+            .details-section h1 {
+                font-size: 20px; /* Título un poco más pequeño para que no ocupe toda la pantalla */
+            }
+
+            .price {
+                font-size: 24px;
+            }
+
+            .viewer-container {
+                border-radius: 0; /* Aspecto más inmersivo de lado a lado en celular */
+                border-left: none;
+                border-right: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -280,11 +314,11 @@
     <!-- Cabecera -->
     <header>
         <a href="#" class="logo">ShoeCommerce</a>
+        <div class="cart-icon">🛒 Carrito (0)</div>
         <div class="search-bar">
-            <input type="text" placeholder="Buscar zapatos, marcas y más...">
+            <input type="text" placeholder="Buscar zapatos...">
             <button>Buscar</button>
         </div>
-        <div style="font-weight: bold; cursor: pointer;">🛒 Carrito</div>
     </header>
 
     <!-- Contenedor del Producto -->
@@ -294,8 +328,8 @@
             <!-- Columna 1: Visor Interactivo -->
             <div class="image-section">
                 <div class="viewer-container" id="shoe-viewer">
-                    <div class="instruction-badge">↔️ Arrastra para girar</div>
-                    <!-- Foto real de Unsplash -->
+                    <div class="instruction-badge">↔️ Arrastra la imagen</div>
+                    <!-- Foto real -->
                     <img id="shoe-image" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop" alt="Zapato Deportivo">
                 </div>
             </div>
@@ -303,7 +337,7 @@
             <!-- Columna 2: Información del Producto -->
             <div class="details-section">
                 <h1>Zapatos Deportivos Nike Pro - Edición Especial con Amortiguación Avanzada</h1>
-                <a href="#" class="store-link">Visita la tienda de Nike</a>
+                <a href="#" class="store-link">Visita la tienda</a>
                 
                 <div class="divider"></div>
                 
@@ -312,9 +346,9 @@
                 </div>
 
                 <div class="attributes">
-                    <h3>Color: <strong>Rojo Fuego</strong></h3>
+                    <h3 style="color: var(--text-muted); font-size: 14px;">Color: <strong style="color: var(--text-main);">Rojo Fuego</strong></h3>
                     
-                    <h3 style="margin-top: 15px;">Talla:</h3>
+                    <h3 style="margin-top: 20px; color: var(--text-muted); font-size: 14px;">Talla:</h3>
                     <div class="size-selector">
                         <button class="size-btn">39</button>
                         <button class="size-btn active">40</button>
@@ -327,12 +361,11 @@
                 <div class="divider"></div>
 
                 <div class="about-item">
-                    <h3>Acerca de este artículo</h3>
+                    <h3 style="font-size: 16px; margin-bottom: 10px;">Acerca de este artículo</h3>
                     <ul>
                         <li>Visualización 360 interactiva para que no te pierdas ningún detalle.</li>
                         <li>Suela de goma antideslizante ideal para asfalto y terrenos mixtos.</li>
                         <li>Material transpirable que mantiene el pie fresco.</li>
-                        <li>Costuras reforzadas para mayor durabilidad en el uso diario.</li>
                     </ul>
                 </div>
             </div>
@@ -341,20 +374,20 @@
             <div class="buy-box">
                 <div class="price">$129.99</div>
                 <div class="stock-status">Disponible.</div>
-                <p style="font-size: 14px; margin-bottom: 15px;">Envío GRATIS en tu primer pedido.</p>
+                <p style="font-size: 14px; margin-bottom: 20px;">Envío GRATIS en tu primer pedido.</p>
                 
                 <button class="btn btn-cart">Agregar al Carrito</button>
                 <button class="btn btn-buy">Comprar Ahora</button>
                 
-                <p style="font-size: 12px; color: var(--text-muted); margin-top: 15px; text-align: center;">
-                    Transacción segura y protegida.
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 15px;">
+                    🔒 Transacción segura y protegida.
                 </p>
             </div>
 
         </div>
     </main>
 
-    <!-- Script de Rotación Simulada y Real -->
+    <!-- Script (Se mantiene exactamente igual para la rotación) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const viewer = document.getElementById('shoe-viewer');
@@ -362,72 +395,43 @@
             
             let isDragging = false;
             let startX = 0;
-            let currentRotation = 0; // Guardará los grados de rotación para el demo visual
+            let currentRotation = 0;
 
-            // Eventos de Mouse
             viewer.addEventListener('mousedown', (e) => {
                 isDragging = true;
                 startX = e.pageX;
             });
 
-            window.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-
-            window.addEventListener('mouseleave', () => {
-                isDragging = false; // Detener si el cursor sale del cuadro
-            });
+            window.addEventListener('mouseup', () => isDragging = false);
+            window.addEventListener('mouseleave', () => isDragging = false);
 
             window.addEventListener('mousemove', (e) => {
                 if (!isDragging) return;
                 e.preventDefault();
                 
-                const currentX = e.pageX;
-                const differenceX = currentX - startX;
-
-                // --- LÓGICA DEMO PARA EL CLIENTE (Rotación 3D en la misma foto) ---
-                // Por cada pixel movido, rotamos la imagen 0.5 grados
+                const differenceX = e.pageX - startX;
                 currentRotation += differenceX * 0.5;
                 shoeImage.style.transform = `rotateY(${currentRotation}deg)`;
-                startX = currentX;
-
-                /* 
-                // --- LÓGICA REAL PARA CUANDO TENGAS LAS 36 FOTOS ---
-                // Descomenta esto y borra la lógica demo de arriba cuando tengas las fotos del cliente.
-                const sensitivity = 8;
-                if (Math.abs(differenceX) >= sensitivity) {
-                    if (differenceX > 0) {
-                        currentFrame = (currentFrame === 1) ? 36 : currentFrame - 1;
-                    } else {
-                        currentFrame = (currentFrame === 36) ? 1 : currentFrame + 1;
-                    }
-                    // shoeImage.src = `ruta_a_tu_carpeta/zapato_${currentFrame}.jpg`;
-                    startX = currentX; 
-                }
-                */
+                startX = e.pageX;
             });
 
-            // Soporte para pantallas táctiles (Móviles)
+            // Táctil
             viewer.addEventListener('touchstart', (e) => {
                 isDragging = true;
                 startX = e.touches[0].pageX;
             });
 
-            window.addEventListener('touchend', () => {
-                isDragging = false;
-            });
+            window.addEventListener('touchend', () => isDragging = false);
 
             window.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
-                const currentX = e.touches[0].pageX;
-                const differenceX = currentX - startX;
-
+                const differenceX = e.touches[0].pageX - startX;
                 currentRotation += differenceX * 0.5;
                 shoeImage.style.transform = `rotateY(${currentRotation}deg)`;
-                startX = currentX;
+                startX = e.touches[0].pageX;
             });
             
-            // Selector de tallas (Visual)
+            // Tallas
             const sizeBtns = document.querySelectorAll('.size-btn');
             sizeBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
